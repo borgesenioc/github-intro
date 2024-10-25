@@ -1,0 +1,110 @@
+# Expert Request Scope Improvement
+
+This document outlines the **Expert Request Scope Improvement** feature for Retool-Access, which enables the Fulfillment Team (FT) to automatically enhance the scope of Expert Requests using an AI-based suggestion system. This feature leverages an API call to ChatGPT to analyze and suggest improvements for various fields within each Expert Request. FT Admins can review these suggestions and apply approved improvements.
+
+---
+
+## Diagram: Expert Request Scope Improvement Flow
+
+Below is the process flow for the feature:
+              +-------------------------+
+              |     Access API          |
+              |   (Incoming Requests)   |
+              +-----------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |     Retool Database      |
+             |  (New Expert Request     |
+             |    Record Created)       |
+             +------------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |    Retool Application    |
+             |    (Triggers API Call    |
+             |     to ChatGPT)          |
+             +------------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |     ChatGPT API          |
+             | (Reviews Scope Fields,   |
+             |  Generates Suggestions)  |
+             +------------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |    Retool Database       |
+             |  (Stores Suggestions in  |
+             |  Mirror Properties)      |
+             +------------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |      Retool App          |
+             |   (FT Admin Reviews,     |
+             |  Approves Suggestions)   |
+             +------------+-------------+
+                          |
+                          |
+             +------------v-------------+
+             |    Retool Database       |
+             | (Merges Approved Fields  |
+             |  to Main Properties)     |
+             +--------------------------+
+
+
+
+             d
+             ---
+
+## Feature Scope
+
+The **Expert Request Scope Improvement** feature allows the Fulfillment Team to:
+1. Automatically analyze and enhance the scope of new Expert Requests through ChatGPT, which provides field-by-field improvement suggestions.
+2. Store these suggestions in **mirror properties** within Retool, maintaining the original fields until admin approval.
+3. Enable FT Admins to review and approve suggestions directly in Retool, merging them into the main properties if approved.
+4. Keep the updates within Retool, allowing FT Admins to manually transfer final updates to the OnFrontiers product.
+
+---
+
+## Step-by-Step Flow
+
+1. **Access API**:
+   - A new Expert Request arrives via the Access API, creating a corresponding record in the Retool Database.
+
+2. **Trigger ChatGPT API Call**:
+   - Upon receiving the new record, Retool sends an API call to ChatGPT with the **20+ fields** in the Expert Request.
+   - ChatGPT generates suggested improvements for each field based on the input scope.
+
+3. **Store Suggestions in Retool Database**:
+   - ChatGPT's suggestions are stored as **mirror properties** in the Retool Database. The original request properties remain unchanged until approved by an FT Admin.
+
+4. **FT Admin Review**:
+   - The Retool app displays the suggestions to the FT Admin with the prompt: **"Is this ok?"** for each suggested field.
+   - If approved, the suggestion merges into the main properties in Retool.
+
+5. **Manual Update to OnFrontiers Product**:
+   - Retool does not push updates directly to the Access API. Instead, FT Admins copy approved changes into the OnFrontiers product as needed.
+
+---
+
+## Implementation Phases
+
+For an iterative setup, the feature will be implemented in the following phases:
+
+1. **Phase 1: Initial Data Flow**:
+   - Set up the Retool Database to automatically create a new Expert Request record for each incoming request via the Access API.
+
+2. **Phase 2: ChatGPT API Integration**:
+   - Configure the Retool app to trigger an API call to ChatGPT with request fields and receive improvement suggestions.
+
+3. **Phase 3: Suggestions Mirroring**:
+   - Store ChatGPT’s suggestions in mirror properties, enabling FT Admins to review and approve the suggestions.
+
+4. **Phase 4: Admin Review Workflow**:
+   - Build the FT Admin interface in Retool to allow easy review and merging of approved suggestions into the main properties.
+
+---
+
