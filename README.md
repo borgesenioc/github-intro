@@ -30,5 +30,3 @@ This repository is designed to help you showcase a dynamic summary of your GitHu
 ## About This Project
 
 This is a volunteer project designed to help federal experts and professionals build an engaging GitHub presence with minimal effort.
-
-Thank you for being a valued member of our community!
